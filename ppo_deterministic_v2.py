@@ -272,7 +272,7 @@ class Agent:
         batch_old_prediction = self.get_old_prediction(batch_s)
         #one-hot the actions. Actions will be the target for actor.
         batch_a_final = np.zeros(shape=(len(batch_a), self.action_n))
-        batch_a_final[:, batch_a.flatten()] = 1
+        batch_a_final[np.arange(len(batch_a)), batch_a.flatten()] = 1
 
         #commit training
         self.actor_network.fit(x=[batch_s, batch_advantage, batch_old_prediction], y=batch_a_final, verbose=0)
