@@ -191,7 +191,8 @@ class Agent:
             clip_ratio = K.backend.clip(ratio, min_value=1 - self.CLIPPING_LOSS_RATIO, max_value=1 + self.CLIPPING_LOSS_RATIO)
             surrogate1 = ratio * advantage
             surrogate2 = clip_ratio * advantage
-            entropy_loss = (prob * K.backend.log(prob + 1e-10)) #optionally add the entropy loss to avoid getting stuck on local minima
+            entropy_loss = K.backend.sum((y_pred * K.backend.log(y_pred + 1e-10)), axis=-1, keepdims=True) #optionally add the entropy loss to avoid getting stuck on local minima
+            # Entropy gets calculated over all actions and not just the choosen one
             ppo_loss = -K.backend.mean(K.backend.minimum(surrogate1,surrogate2) + self.ENTROPY_LOSS_RATIO * entropy_loss)
             return ppo_loss
         return loss
