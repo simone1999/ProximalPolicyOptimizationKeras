@@ -11,7 +11,7 @@ https://youtu.be/5P7I-xPq8u8
 CAVE: This version has currently a bug / is incomplete. 
 The rewards and gae-rewards should be calculated after each episode to get correct values in accordance with the 
 final episoe reward. Currently the buffer is filled for a random step amount and often there is not final reward yet.
-In the lunar lander example this can lead to that the agent never experience the ideal final state which is leanding.
+In the lunar lander example this can lead to that the agent never experience the ideal final state which is landing.
 I will try to upload a fixed version soon.
     
 """
@@ -48,8 +48,8 @@ class Memory:
         """simply retuns a randomized batch from the data in memory
         r not really needed for training (gae_r is used). but might be interesting for logging.
         """
+        s,a,r,gae_r,s_,d = [],[],[],[],[],[]
         for _ in range(batch_size):
-            s,a,r,gae_r,s_,d = [],[],[],[],[],[]
             pos = np.random.randint(len(self.batch_s)) #random position
             s.append(self.batch_s[pos])
             a.append(self.batch_a[pos])
